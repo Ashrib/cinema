@@ -1,3 +1,10 @@
+// const preData = window.localStorage.getItem(JSON.parse("Reserved seats"));
+// const seatsArray = [...preData];
+// for(let keey in seatsArray){
+    
+// }
+
+
 let allMoives = [
     {
         "type": "Hollywood",
@@ -242,6 +249,7 @@ let allMoives = [
         ]  
     }
 ];
+
 let mainDiv = document.getElementById("main-div");
 let moivesBodyDiv = document.getElementById("movies-container");
 
@@ -297,20 +305,14 @@ for(let i of allMoives) {
     }
 };
 function movieDetail(event){
-    event.target.firstChild.style.display = "flex"
+    event.target.firstChild.style.display = "flex";
     // console.log(event.target.firstChild)
-    // movieDetailBox.animate([    //animation
-    // { transform: 'translateY(470px)'},
-    // { transform: 'translateY(0px)'},
-    // { transition: '1s'},
-    // ],{
-    //     duration: 500
-    // });
 
 }
 function movieDetailHide(event){
     // console.log(event.target)
-    event.target.parentNode.firstChild.style.display = "none"
+    event.target.parentNode.firstChild.style.display = "none";
+
 
 }
 let modalBackground = document.createElement("div");
@@ -335,6 +337,13 @@ let seatsContainer = document.createElement("div");
 seatsContainer.setAttribute("id","seats-container");
 bookingModal.appendChild(seatsContainer);
 
+let confirm_btn =  document.createElement("button");
+confirm_btn.setAttribute("id" , "book-ok");
+confirm_btn.setAttribute("onClick", "book()");
+confirm_btn.textContent = "Book";
+bookingModal.appendChild(confirm_btn);
+
+
 function checkoutBtn(event){
     modalBackground.style.display = "flex";
     console.log(event.target.parentNode.parentNode)
@@ -349,6 +358,7 @@ function checkoutBtn(event){
                     console.log(allMoives[0].movies[key2].movieInfo.details.seats.seat[key5])
                     let seat = document.createElement("div");
                     seat.setAttribute("class","seat");
+                    seat.setAttribute("onClick", "bookSeat(event)")
                     seat.textContent = key5
                     seatsContainer.appendChild(seat);
                 }
@@ -362,6 +372,7 @@ function checkoutBtn(event){
                     console.log(allMoives[1].movies[key12].movieInfo.details.seats.seat[key5])
                     let seat = document.createElement("div");
                     seat.setAttribute("class","seat");
+                    seat.setAttribute("onClick", "bookSeat(event)")
                     seat.textContent = key5
                     seatsContainer.appendChild(seat);
 
@@ -374,11 +385,23 @@ function checkoutBtn(event){
 
 
     console.log(event.target.parentNode.parentNode.getAttribute("style"))
-    let url = event.target.parentNode.parentNode.getAttribute("style")
-    bookingModal.setAttribute("style",url);
+    // let url = event.target.parentNode.parentNode.getAttribute("style")
+    // bookingModal.setAttribute("style",url);
 
 }
 function closeModal(){
     modalBackground.style.display = "none";
     seatsContainer.innerHTML = null
+}
+let totalSeats = [];
+function bookSeat(event) {
+    event.target.style.backgroundColor = "green";
+    event.target.style.transition = "1s";
+    totalSeats.push(event.target.innerHTML);
+    console.log(totalSeats)
+}
+function book(event) {
+    if(totalSeats.length>1){
+        window.localStorage.setItem("Reserved seats",JSON.stringify(totalSeats));
+    }
 }
