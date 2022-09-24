@@ -254,7 +254,6 @@ let mainDiv = document.getElementById("main-div");
 let moivesBodyDiv = document.getElementById("movies-container");
 
 for(let i of allMoives) {
-    // console.log(i)
     let movieTypeDiv = document.createElement("div");
     movieTypeDiv.setAttribute("class", "movie-type-box");
     moivesBodyDiv.appendChild(movieTypeDiv);
@@ -306,11 +305,9 @@ for(let i of allMoives) {
 };
 function movieDetail(event){
     event.target.firstChild.style.display = "flex";
-    // console.log(event.target.firstChild)
 
 }
 function movieDetailHide(event){
-    // console.log(event.target)
     event.target.parentNode.firstChild.style.display = "none";
 
 
@@ -339,14 +336,15 @@ bookingModal.appendChild(seatsContainer);
 
 let confirm_btn =  document.createElement("button");
 confirm_btn.setAttribute("id" , "book-ok");
-confirm_btn.setAttribute("onClick", "book()");
+confirm_btn.setAttribute("onClick", "book(event)");
 confirm_btn.textContent = "Book";
 bookingModal.appendChild(confirm_btn);
 
-
+let selectedMovie;
 function checkoutBtn(event){
     modalBackground.style.display = "flex";
-    console.log(event.target.parentNode.parentNode)
+    selectedMovie = event.target.parentNode.firstChild.innerHTML;
+
     var typeAtt = event.target.parentNode.parentNode.getAttribute("type")
     var keyAtt = event.target.parentNode.parentNode.getAttribute("key")
 
@@ -384,7 +382,7 @@ function checkoutBtn(event){
 
 
 
-    console.log(event.target.parentNode.parentNode.getAttribute("style"))
+    // console.log(event.target.parentNode.parentNode.getAttribute("style"))
     // let url = event.target.parentNode.parentNode.getAttribute("style")
     // bookingModal.setAttribute("style",url);
 
@@ -401,6 +399,8 @@ function bookSeat(event) {
     console.log(totalSeats)
 }
 function book(event) {
+    console.log(event.target.parentNode)
+    console.log(selectedMovie)
     if(totalSeats.length>1){
         window.localStorage.setItem("Reserved seats",JSON.stringify(totalSeats));
     }
